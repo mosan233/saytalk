@@ -1,3 +1,4 @@
+
 package com.sf.skytalk;
 
 import org.springframework.boot.SpringApplication;

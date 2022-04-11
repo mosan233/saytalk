@@ -1,7 +1,7 @@
 package com.sf.skytalk.controller;
 
 import com.sf.skytalk.model.User2;
-import com.sf.skytalk.service.PublishService;
+import com.sf.skytalk.service.QuestionService;
 import com.sf.skytalk.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PublishController {
 
     @Autowired
-    private PublishService publishService;
+    private QuestionService questionService;
 
     @GetMapping("/publish")
     public String publish(){
@@ -52,7 +52,7 @@ public class PublishController {
 //            model.addAttribute("error","用户未登录");
 //            return "publish";
 //        }
-        if(publishService.addQuestion(title,description,tag,user)){
+        if(questionService.addQuestion(title,description,tag,user)){
             return "redirect:/" ;
         }else {
             model.addAttribute("error","发布失败");

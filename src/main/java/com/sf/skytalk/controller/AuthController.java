@@ -31,7 +31,7 @@ public class AuthController {
         System.out.println(code+","+state);
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id("2c40bab22405abf3edf0");
-        accessTokenDTO.setClient_secret("32ff0e24e9dd70fa0285c3f77240f95add1d508f");
+        accessTokenDTO.setClient_secret("90ae26e701c92baf6692d85c19ddf2ee106fbd02");
         accessTokenDTO.setRedirect_uri("http://localhost:8087/callback");
         accessTokenDTO.setCode(code);
         accessTokenDTO.setState(state);
@@ -45,10 +45,11 @@ public class AuthController {
             }
             user.setGmtCreate(System.currentTimeMillis());
             user.setName(githubUser.getName());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             user.setToken(UUID.randomUUID().toString());
             userMapper.insertUser(user);
             response.addCookie(new Cookie("token",user.getToken()));
         }
-        return "rediect：/";
+        return "redirect:/";
     }
 }
