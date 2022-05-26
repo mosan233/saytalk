@@ -1,10 +1,7 @@
 package com.sf.skytalk.mapper;
 
 import com.sf.skytalk.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -28,4 +25,12 @@ public interface QuestionMapper {
 
     @Select("select count(1) from question where creator = #{userId}")
     int countByUserId(@Param("userId") Integer userId);
+
+    //根据注解查询
+    @Select("select * from question where id = #{id}")
+    Question selectByPrimary(@Param("id") Integer id);
+
+    //根据主键更新
+    @Update("update question set title = #{title},description = #{description},tag = #{tag},gmt_modified = #{gmtModified} where id = #{id}")
+    int updateByPrimary(Question question);
 }

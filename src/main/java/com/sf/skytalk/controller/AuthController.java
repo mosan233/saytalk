@@ -5,10 +5,13 @@ import com.sf.skytalk.dto.GithubUser;
 import com.sf.skytalk.mapper.UserMapper;
 import com.sf.skytalk.model.User2;
 import com.sf.skytalk.provider.GithubProvider;
+import com.sf.skytalk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sun.dc.pr.PRError;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,14 @@ public class AuthController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code, @RequestParam(name="state")String state,
                            HttpServletResponse response){
@@ -36,20 +47,29 @@ public class AuthController {
         accessTokenDTO.setCode(code);
         accessTokenDTO.setState(state);
         String accessTokens = githubProvider.getAccessToken(accessTokenDTO);
-        System.out.println("token:"+accessTokens);
         GithubUser githubUser = githubProvider.getUser(accessTokens);
         if(githubUser != null){
             User2 user = new User2();
             if(githubUser.getId() != null){
                 user.setAccountId(String.valueOf(githubUser.getId()));
             }
-            user.setGmtCreate(System.currentTimeMillis());
+
             user.setName(githubUser.getName());
             user.setAvatarUrl(githubUser.getAvatarUrl());
             user.setToken(UUID.randomUUID().toString());
-            userMapper.insertUser(user);
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token",user.getToken()));
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/layout")
+    public String layout(HttpServletRequest request
+            ,HttpServletResponse response){
+        //移除session中的user对象，以及从cookie中欧佩克弄贫困年5 7 333.移除token
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token",null);
+        response.addCookie(cookie);
+        return "index";
     }
 }

@@ -2,6 +2,8 @@ package com.sf.skytalk.service.impl;
 
 import com.sf.skytalk.dto.Pagination;
 import com.sf.skytalk.dto.QuestionDTO;
+import com.sf.skytalk.exception.CustomerException;
+import com.sf.skytalk.exception.QuestionErrorCode;
 import com.sf.skytalk.mapper.QuestionMapper;
 import com.sf.skytalk.mapper.UserMapper;
 import com.sf.skytalk.model.Question;
@@ -22,17 +24,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    @Override
-    public boolean addQuestion(String title, String description, String tag, User2 user) {
-        Question question = new Question();
-        question.setTitle(title);
-        question.setDescription(description);
-        question.setTag(tag);
-        question.setCreator(user.getId());
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
-        return questionMapper.create(question) == 1 ? true : false;
-    }
 
     @Override
     public Pagination<QuestionDTO> list(int page, int size) {
@@ -70,5 +61,33 @@ public class QuestionServiceImpl implements QuestionService {
         }
         pagination.setData(resultList);
         return pagination;
+    }
+
+    @Override
+    public QuestionDTO getById(Integer id) {
+        Question question = questionMapper.selectByPrimary(id);
+        if (question == null){
+            throw new CustomerException(QuestionErrorCode.QUESTION_NOT_FOUND);
+        }
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question,questionDTO);
+        User2 user = userMapper.selectById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    @Override
+    public boolean createOrUpdate(Question question) {
+        if (question.getId() == null){
+            question.setGmtCreate(System.currentTimeMillis());
+            questionMapper.create(question);
+        }else {
+            question.setGmtModified(System.currentTimeMillis());
+            int row = questionMapper.updateByPrimary(question);
+            if (row != 1){
+                throw new CustomerException(QuestionErrorCode.QUESTION_NOT_FOUND);
+            }
+        }
+        return true;
     }
 }

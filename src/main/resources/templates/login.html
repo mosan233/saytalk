@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <style>
+        .login{
+            width: 300px;
+            height:150px;
+            margin: 100px auto;
+            padding-top: 50px;
+            text-align: center;
+            border: 5px solid gray;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="~{common :: nav}"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="login">
+<!--                <div class="input-group">-->
+<!--                    <span class="input-group-addon" id="sizing-addon1">用户名</span>-->
+<!--                    <input type="text" class="form-control"name="username" placeholder="Username" aria-describedby="sizing-addon1">-->
+<!--                </div>-->
+<!--                <div class="input-group">-->
+<!--                    <span class="input-group-addon" id="sizing-addon2">密码</span>-->
+<!--                    <input type="text" class="form-control" name="password" placeholder="Password" aria-describedby="sizing-addon2">-->
+<!--                </div>-->
+<!--                <div class="btn-group" role="group" aria-label="...">-->
+<!--                    <button type="button" class="btn btn-default" id="saveBtn">登录</button>-->
+<!--                </div>-->
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <a href="/auth/qq">qq登录</a>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                  <a href="https://github.com/login/oauth/authorize?client_id=2c40bab22405abf3edf0
+&redirect_uri=http://localhost:8087/callback&scope=user&state=STATE">github登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

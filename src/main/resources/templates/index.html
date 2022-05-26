@@ -16,11 +16,13 @@
             <div class="media" th:each="question : ${pagination.data}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object" style="width: 160px;height: 70px" th:src="${question.user.avatarUrl}" alt="用户头像">
+                        <img class="media-object" style="width: 80px;height: 70px" th:src="${question.user.avatarUrl}" alt="用户头像">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <h4 class="media-heading" >
+                        <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
+                    </h4>
                     <div th:text="${question.description}"></div>
                 </div>
             </div>

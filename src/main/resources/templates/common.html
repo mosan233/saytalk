@@ -34,8 +34,9 @@
                         </ul>
                     </li>
                     <li th:if="${session.user == null}">
-                        <a href="https://github.com/login/oauth/authorize?client_id=2c40bab22405abf3edf0
-&redirect_uri=http://localhost:8087/callback&scope=user&state=STATE">登录</a>
+                       <!-- <a href="https://github.com/login/oauth/authorize?client_id=2c40bab22405abf3edf0
+&redirect_uri=http://localhost:8087/callback&scope=user&state=STATE">登录</a>-->
+                        <a href="/login">登录</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->

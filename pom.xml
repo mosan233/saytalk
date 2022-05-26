@@ -7,7 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>skytalk</name>
     <description>Demo project for Spring Boot</description>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -119,6 +119,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+
+                <configuration>
+                    <verbose>true</verbose>
+                    <!--为true时每次生成都会覆盖原来的-->
+                    <overwrite>true</overwrite>
+                </configuration>
+
             </plugin>
         </plugins>
     </build>
