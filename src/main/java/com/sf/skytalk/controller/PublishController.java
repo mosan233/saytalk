@@ -1,11 +1,10 @@
 package com.sf.skytalk.controller;
 
 import com.sf.skytalk.mapper.QuestionMapper;
+import com.sf.skytalk.model.User;
 import com.sf.skytalk.model.Question;
-import com.sf.skytalk.model.User2;
 import com.sf.skytalk.service.QuestionService;
 import com.sf.skytalk.utils.StringUtils;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +53,7 @@ public class PublishController {
             return "publish";
         }
 
-        User2 user = (User2) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             model.addAttribute("error","用户未登录");
             return "publish";
@@ -71,9 +70,9 @@ public class PublishController {
     }
 
     @GetMapping("/publish/{id}")
-    public String edit(@PathVariable("id") Integer id
+    public String edit(@PathVariable("id") Long id
             ,Model model){
-        Question question = questionMapper.selectByPrimary(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
         model.addAttribute("id",id);
         model.addAttribute("title",question.getTitle());
         model.addAttribute("description",question.getDescription());

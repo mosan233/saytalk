@@ -1,21 +1,21 @@
 package com.sf.skytalk.service;
 
-import com.sf.skytalk.dto.Pagination;
+import com.sf.skytalk.dto.PaginationDTO;
 import com.sf.skytalk.dto.QuestionDTO;
 import com.sf.skytalk.model.Question;
 
 public interface QuestionService {
 
-    Pagination<QuestionDTO> list(int page, int size);
+    PaginationDTO<QuestionDTO> list(int page, int size);
 
-    Pagination list(Integer id, Integer page, Integer size);
+    PaginationDTO list(Long userId, Integer page, Integer size);
 
     /**
      * 根据id获取
      * @param id
      * @return
      */
-    QuestionDTO getById(Integer id);
+    QuestionDTO getById(Long id);
 
     /**
      *创建或更新问题

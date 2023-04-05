@@ -19,6 +19,7 @@ public class CustomerExceptionHandler {
         }else {
             view.addObject("message","服务器冒烟了，请稍后重试");
         }
+        //出现异常返回的页面
         view.setViewName("error");
         return view;
     }

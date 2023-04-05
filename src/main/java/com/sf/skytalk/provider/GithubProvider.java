@@ -2,7 +2,7 @@ package com.sf.skytalk.provider;
 
 import com.alibaba.fastjson.JSON;
 import com.sf.skytalk.dto.AccessTokenDTO;
-import com.sf.skytalk.dto.GithubUser;
+import com.sf.skytalk.dto.GithubUserDTO;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +28,7 @@ public class GithubProvider {
         return null;
     }
 
-    public GithubUser getUser(String accessToken){
+    public GithubUserDTO getUser(String accessToken){
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -38,8 +38,8 @@ public class GithubProvider {
         try (Response response = client.newCall(request).execute()){
             if (response.code() == 200){
                 String res = response.body().string();
-                GithubUser githubUser = JSON.parseObject(res , GithubUser.class);
-                return githubUser;
+                GithubUserDTO githubUserDTO = JSON.parseObject(res , GithubUserDTO.class);
+                return githubUserDTO;
             }
         }catch (Exception e){
             e.printStackTrace();

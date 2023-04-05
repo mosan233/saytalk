@@ -1,7 +1,7 @@
 package com.sf.skytalk.interceptor;
 
-import com.sf.skytalk.mapper.UserMapper;
-import com.sf.skytalk.model.User2;
+import com.sf.skytalk.model.User;
+import com.sf.skytalk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,27 +15,22 @@ import javax.servlet.http.HttpServletResponse;
 public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
-        User2 user = (User2) request.getSession().getAttribute("user");
-        if (user == null){
-            user = userMapper.selectByToken("aaa");
-            request.getSession().setAttribute("user",user);
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if("token".equals(cookie.getName())){
+                    User user = userService.getByToken(cookie.getValue());
+                    if(user != null){
+                        request.getSession().setAttribute("user",user);
+                        break;
+                    }
+                }
+            }
         }
-//        if(cookies != null){
-//            for(Cookie cookie : cookies){
-//                if("token".equals(cookie.getName())){
-//                    User2 user = userMapper.selectByToken(cookie.getValue());
-//                    if(user != null){
-//                        request.getSession().setAttribute("user",user);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
         return true;
     }
 

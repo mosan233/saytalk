@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!-- 使用已有的配置文件 -->
+    <properties resource="application.properties"></properties>
+    <!-- 数据库驱动 -->
+<!--    <classPathEntry location="D:\dev\repository\mysql\mysql-connector-java\8.0.22\mysql-connector-java-8.0.22.jar"/>-->
+
+    <context id="MySqlTables" targetRuntime="MyBatis3">
+        <!-- 生成的pojo，将implements Serializable -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <!--添加分页-->
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="${spring.datasource.driver-class-name}"
+                        connectionURL="${spring.datasource.url}"
+                        userId="${spring.datasource.username}"
+                        password="${spring.datasource.password}">
+            <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!-- 配置实体类生成的位置 -->
+        <javaModelGenerator targetPackage="com.sf.skytalk.model" targetProject="src/main/java">
+            <!--set方法去前后空格-->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--配置 xml文件生成的位置-->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- 配置mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sf.skytalk.mapper"  targetProject="src/main/java" >
+        </javaClientGenerator>
+
+
+        <!-- 需要生成的数据库表 -->
+        <table tableName="user" domainObjectName="User" ></table>
+        <table tableName="question" domainObjectName="Question" ></table>
+        <table tableName="comment" domainObjectName="Comment"></table>
+    </context>
+</generatorConfiguration>

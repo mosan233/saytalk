@@ -14,7 +14,7 @@ public class CustomerErrorController implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        return null;
+        return "error";
     }
 
 

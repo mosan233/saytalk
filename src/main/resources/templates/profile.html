@@ -25,6 +25,7 @@
                 <div class="media-body">
                     <h4 class="media-heading" th:text="${question.title}"></h4>
                     <div th:text="${question.description}"></div>
+                    <div class="text-desc"><span th:text="${question.commentCount}"></span>个回复 •  <span th:text="${question.viewCount}"></span> 次浏览 • <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></span></div>
                 </div>
             </div>
 
@@ -32,7 +33,7 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}">
-                        <a th:href="@{'/profile/'+${section}(page=${1})}" aria-label="Previous">
+                        <a th:href="@{'/profile/'+${section}+'?page=1'}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>

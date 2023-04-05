@@ -14,7 +14,7 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left">
+                <form class="navbar-form navbar-left" action="/toVirtualLogin">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="搜索话题">
                     </div>
@@ -24,19 +24,19 @@
                     <li><a href="/publish">发布</a></li>
                     <li class="dropdown" th:if="${session.user != null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span th:text="${session.user.name}"></span>我
+                            <span th:text="${session.user.name}">我</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile/question">我的问题</a></li>
                             <li><a href="#">个人资料</a></li>
-                            <li><a href="#">退出登录</a></li>
+                            <li><a href="/layout">退出登录</a></li>
                         </ul>
                     </li>
                     <li th:if="${session.user == null}">
-                       <!-- <a href="https://github.com/login/oauth/authorize?client_id=2c40bab22405abf3edf0
-&redirect_uri=http://localhost:8087/callback&scope=user&state=STATE">登录</a>-->
-                        <a href="/login">登录</a>
+                       <a href="https://github.com/login/oauth/authorize?client_id=2c40bab22405abf3edf0
+&redirect_uri=http://localhost:8087/callback&scope=user&state=STATE">登录</a>
+                        <!--<a href="/login">登录</a>-->
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->

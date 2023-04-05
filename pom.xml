@@ -78,6 +78,8 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+
+
     </dependencies>
 
     <dependencyManagement>
@@ -124,13 +126,22 @@
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
-
+                <version>1.3.2</version>
                 <configuration>
                     <verbose>true</verbose>
                     <!--为true时每次生成都会覆盖原来的-->
                     <overwrite>true</overwrite>
+                    <!-- 定义配置文件 -->
+                    <configurationFile>${basedir}/src/main/resources/generator-configuration.xml</configurationFile>
                 </configuration>
 
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.22</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

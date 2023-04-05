@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class Pagination<T> {
+public class PaginationDTO<T> {
     private List<T> data;
     private int totalCount;
     private int page;
@@ -20,14 +20,14 @@ public class Pagination<T> {
     private List<Integer> pages = new ArrayList<>();
 
 
-    public void setPagination(int totalCount, int page,int size){
+    public void setPagination(int totalCount, int page, int size){
         this.totalPage = totalCount%size == 0 ? totalCount/size : (totalCount/size+1);
         this.page = page < 1 ? 1 : page;
         this.page = this.page > totalPage ? totalPage : this.page;
         this.size = size;
         this.totalCount = totalCount;
         this.pages.add(this.page);
-        //当前页前三个页码 当前页 当前页后三个页面
+        //页面分页显示当前页前三个页码 当前页 当前页后三个页面
         for(int i=1;i<=3;i++){
             if(this.page-i >= 1){//页码大于1
                 this.pages.add(0,this.page-i);

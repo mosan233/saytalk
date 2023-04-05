@@ -1,9 +1,8 @@
 package com.sf.skytalk.controller;
 
-import com.sf.skytalk.dto.Pagination;
+import com.sf.skytalk.dto.PaginationDTO;
 import com.sf.skytalk.dto.QuestionDTO;
-import com.sf.skytalk.mapper.UserMapper;
-import com.sf.skytalk.model.User2;
+import com.sf.skytalk.model.User;
 import com.sf.skytalk.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class ProfileController {
 
-    @Autowired
-    private UserMapper userMapper;
     @Autowired
     private QuestionService questionService;
 
@@ -30,7 +25,7 @@ public class ProfileController {
                          @RequestParam(value = "page",defaultValue = "1") int page,
                          @RequestParam(value = "size",defaultValue = "5") int size,
                          Model model){
-        User2 user = (User2) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         if (user == null){
             return "redirect:/";
         }
@@ -42,8 +37,8 @@ public class ProfileController {
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","最新回复");
         }
-        Pagination<QuestionDTO> pagination = questionService.list(user.getId(),page,size);
-        model.addAttribute("pagination",pagination);
+        PaginationDTO<QuestionDTO> paginationDTO = questionService.list(user.getId(),page,size);
+        model.addAttribute("pagination", paginationDTO);
         return "profile";
     }
 }

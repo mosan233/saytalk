@@ -1,8 +1,12 @@
 package com.sf.skytalk.service;
 
-import com.sf.skytalk.model.User2;
+import com.sf.skytalk.model.User;
 
 public interface UserService {
 
-    void createOrUpdate(User2 user);
+    User getByAccountId(String accountId);
+
+    void createOrUpdate(User user);
+
+    User getByToken(String value);
 }
